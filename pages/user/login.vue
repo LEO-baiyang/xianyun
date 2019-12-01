@@ -3,17 +3,34 @@
     <el-row type="flex" justify="space-between" align="middle" class="main">
       <div class="form-wrapper">
         <el-row type="flex" justify="center" class="tabs">
-          <span v-for="(value,index) in ['登录','注册']" :key="index">{{value}}</span>
-          <!-- <span>注册</span> -->
+          <span
+            v-for="(value,index) in ['登录','注册']"
+            :key="index"
+            :class="{active:currentTab===index}"
+            @click="changeCurrentTab(index)"
+          >{{value}}</span>
         </el-row>
-        
+        <!-- 登录组件 -->
+
+        <!-- 注册组件 -->
       </div>
     </el-row>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      currentTab: 0
+    };
+  },
+  methods: {
+    changeCurrentTab(index) {
+      this.currentTab = index;
+    }
+  }
+};
 </script>
 
 <style lang="less" scoped>
