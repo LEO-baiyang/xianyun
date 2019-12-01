@@ -10,8 +10,8 @@
             @click="changeCurrentTab(index)"
           >{{value}}</span>
         </el-row>
-        <!-- 登录组件 -->
-
+        <!-- 登录功能组件 -->
+        <LoginForm v-if="currentTab == 0" />
         <!-- 注册组件 -->
       </div>
     </el-row>
@@ -19,7 +19,11 @@
 </template>
 
 <script>
+import LoginForm from '@/components/user/loginForm.vue'
 export default {
+  components: {
+    LoginForm
+  },
   data() {
     return {
       currentTab: 0
