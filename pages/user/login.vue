@@ -13,16 +13,19 @@
         <!-- 登录功能组件 -->
         <LoginForm v-if="currentTab == 0" />
         <!-- 注册组件 -->
+        <RegisterForm v-if="currentTab == 1" />
       </div>
     </el-row>
   </div>
 </template>
 
 <script>
-import LoginForm from '@/components/user/loginForm.vue'
+import LoginForm from "@/components/user/loginForm.vue";
+import RegisterForm from "@/components/user/registerform.vue";
 export default {
   components: {
-    LoginForm
+    LoginForm,
+    RegisterForm
   },
   data() {
     return {
