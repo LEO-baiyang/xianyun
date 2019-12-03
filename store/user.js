@@ -17,6 +17,11 @@ export const mutations = {
   setUserInfo(state, data) {
     // 修改用户数据
     state.userInfo = data
+  },
+  // 登出事件
+  clearUserInfo(state) {
+    state.userInfo = {}
+    localStorage.removeItem('store')
   }
 }
 
@@ -40,7 +45,7 @@ export const actions = {
       method: "POST",
       data
     }).then(res => {
-      console.log(res)
+      // console.log(res)
       const data = res.data
       // 调用 context.commit提交一个mutation，将数据存储到store中,第一个参数是mutation的名字，第二个参数是要传递的数据
       commit('setUserInfo', data)

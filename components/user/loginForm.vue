@@ -20,8 +20,8 @@ export default {
   data() {
     return {
       form: {
-        username: "",
-        password: ""
+        username: "13800138000",
+        password: "123456"
       },
       rules: {
         username: [
@@ -62,7 +62,8 @@ export default {
             // 成功提示
             this.$message({
               message: "登录成功，正在跳转",
-              type: "success"
+              type: "success",
+              duration: 1000
             });
             // 跳转到首页
             setTimeout(() => {

@@ -47,7 +47,16 @@
 export default {
   methods: {
     // 用户退出
-    handleLogout() {}
+    handleLogout() {
+      // 点击登出按钮，需要清空store（vuex）和本地的用户信息（localStorage）
+      this.$store.commit("user/clearUserInfo");
+      this.$message({
+        message: "退出成功",
+        type: "success",
+        // 显示时间
+        duration: 2000
+      });
+    }
   }
 };
 </script>
