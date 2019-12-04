@@ -13,7 +13,7 @@
         <!-- 登录功能组件 -->
         <LoginForm v-if="currentTab == 0" />
         <!-- 注册组件 -->
-        <RegisterForm v-if="currentTab == 1" />
+        <RegisterForm v-if="currentTab == 1" @jump="tologin" />
       </div>
     </el-row>
   </div>
@@ -35,6 +35,9 @@ export default {
   methods: {
     changeCurrentTab(index) {
       this.currentTab = index;
+    },
+    tologin() {
+      this.currentTab = 0;
     }
   }
 };

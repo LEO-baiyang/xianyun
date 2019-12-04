@@ -21,7 +21,7 @@ export const mutations = {
   // 登出事件
   clearUserInfo(state) {
     state.userInfo = {}
-    localStorage.removeItem('store')
+    // localStorage.removeItem('store')
   }
 }
 
@@ -41,8 +41,8 @@ export const actions = {
     // 发送请求，return以便组件将数据存储到store中
     // 这里的 return 是为了能够对外返回一个带数据的 promise 方便外面继续进行处理，即.then()，组件中调用action时的.then()，这个数据是在发送axios请求成功之后的数据，如果没有return，那么返回的promise对象和原来的是不一样的
     return this.$axios({
-      url: "/accounts/login",
-      method: "POST",
+      url: '/accounts/login',
+      method: 'POST',
       data
     }).then(res => {
       // console.log(res)

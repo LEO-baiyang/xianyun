@@ -4,7 +4,7 @@
       <el-input v-model="form.username" placeholder="用户名/手机"></el-input>
     </el-form-item>
     <el-form-item class="form-item" prop="password">
-      <el-input v-model="form.password" type="password" placeholder="用户名/手机"></el-input>
+      <el-input v-model="form.password" type="password" placeholder="密码"></el-input>
     </el-form-item>
     <p class="form-text">
       <nuxt-link to="#">忘记密码</nuxt-link>
@@ -20,8 +20,8 @@ export default {
   data() {
     return {
       form: {
-        username: "13800138000",
-        password: "123456"
+        username: "",
+        password: ""
       },
       rules: {
         username: [
