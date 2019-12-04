@@ -96,7 +96,7 @@ export default {
       },
       buttonText: "发送验证码",
       isDisable: true,
-      count: 6
+      count: 60
     };
   },
   methods: {
