@@ -2,8 +2,12 @@
   <div class="flightListTitle">
     <el-row type="flex" justify="space-between">
       <el-col :span="6" class="flights-content">航空信息</el-col>
-      <el-col :span="6" class="flights-content">起飞时间</el-col>
-      <el-col :span="6" class="flights-content">到达时间</el-col>
+      <el-col :span="12">
+        <el-row type="flex" justify="space-between">
+          <el-col :span="12" class="flights-content">起飞时间</el-col>
+          <el-col :span="12" class="flights-content">到达时间</el-col>
+        </el-row>
+      </el-col>
       <el-col :span="6" class="flights-content">价格</el-col>
     </el-row>
   </div>
