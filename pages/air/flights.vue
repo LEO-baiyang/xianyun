@@ -32,7 +32,9 @@
       </el-col>
 
       <!-- 侧边 -->
-      <el-col class="aside" :span="6"></el-col>
+      <el-col class="aside" :span="6">
+        <FlightsAside />
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -44,6 +46,8 @@ import FlightsListHeader from "@/components/air/flightsListHeader.vue";
 import FlightsList from "@/components/air/flightsList.vue";
 // 引入顶部筛选部分
 import FlightsFilter from "@/components/air/flightsFilter.vue";
+// 引入侧边栏
+import FlightsAside from "@/components/air/flightsAside.vue";
 export default {
   data() {
     return {
@@ -70,7 +74,8 @@ export default {
   components: {
     FlightsListHeader,
     FlightsList,
-    FlightsFilter
+    FlightsFilter,
+    FlightsAside
   },
   mounted() {
     // 页面一加载就需要生成列表数据
@@ -125,7 +130,7 @@ export default {
       const start = (this.currentPage - 1) * this.pageSize;
       const end = start + this.pageSize;
       // 数组 slice 方法接受两个参数, 第一个是切割的开始(包括当前index), 第二个是切割的结束(不包过当前 index),
-      console.log(this.flightsData.flights);
+      // console.log(this.flightsData.flights);
       return this.flightsData.flights.slice(start, end);
     }
   }
@@ -149,7 +154,7 @@ export default {
   .aside {
     // width: 240px;
     height: 300px;
-    background-color: pink;
+    // background-color: pink;
   }
 }
 </style>

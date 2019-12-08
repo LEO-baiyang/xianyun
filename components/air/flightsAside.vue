@@ -1,0 +1,105 @@
+<template>
+  <div class="flight-aside">
+    <div class="serve-title">
+      <el-row class="statement-list" type="flex" justify="space-between">
+        <el-col :span="8">
+          <i class="iconfont iconweibiaoti-_huabanfuben" style="color:#409EFF;"></i>
+          <span>航协认证</span>
+        </el-col>
+        <el-col :span="8">
+          <i class="iconfont iconbaozheng" style="color:green;"></i>
+          <span>出行保证</span>
+        </el-col>
+        <el-col :span="8">
+          <i class="iconfont icondianhua" style="color:#409EFF;"></i>
+          <span>7x24</span>
+        </el-col>
+      </el-row>
+      <el-row class="tel">免费客服电话：4006345678转2</el-row>
+    </div>
+    <div class="history">
+      <h5>历史查询</h5>
+      <nuxt-link to="/">
+        <el-row type="flex" justify="space-between" align="middle" class="history-item">
+          <div class="air-info">
+            <div class="to-from">广州 - 上海</div>
+            <p>2019-12-10</p>
+          </div>
+          <span>选择</span>
+        </el-row>
+      </nuxt-link>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {};
+</script>
+
+<style lang="less" scoped>
+.flight-aside {
+  .serve-title {
+    border: 1px solid #eee;
+    margin-bottom: 16px;
+    .statement-list {
+      padding: 10px 0;
+      > div {
+        text-align: center;
+        i {
+          display: block;
+          font-size: 40px;
+        }
+        span {
+          font-size: 12px;
+        }
+      }
+    }
+    .tel {
+      background-color: #f6f6f6;
+      height: 32px;
+      line-height: 32px;
+      padding: 0 10px;
+      font-size: 14px;
+    }
+  }
+  .history {
+    border: 1px solid #eee;
+    padding: 10px;
+    font-size: 14px;
+    h5 {
+      font-size: 16px;
+      font-weight: normal;
+      padding-bottom: 10px;
+      border-bottom: 1px #eee solid;
+    }
+    .history-item {
+      padding: 10px 0;
+      font-size: 14px;
+      border-bottom: 1px #eee solid;
+
+      &:last-child {
+        border: none;
+      }
+
+      .to-from {
+        margin-bottom: 5px;
+      }
+
+      p {
+        font-size: 12px;
+        color: #666;
+      }
+
+      span {
+        color: #fff;
+        display: block;
+        padding: 2px 10px;
+        background: orange;
+        border-radius: 4px;
+        font-size: 12px;
+        cursor: pointer;
+      }
+    }
+  }
+}
+</style>
