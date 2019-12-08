@@ -4,7 +4,7 @@
       <!-- 主体  -->
       <el-col class="flightsList" :span="18">
         <!-- 过滤筛选 -->
-        <div></div>
+        <FlightsFilter :flightsInfo="flightsInfo" />
         <!-- 列表头部 -->
         <FlightsListHeader />
         <!-- 列表内容 -->
@@ -40,22 +40,27 @@
 <script>
 // 引入列表头部部分
 import FlightsListHeader from "@/components/air/flightsListHeader.vue";
+// 引入列表部分
 import FlightsList from "@/components/air/flightsList.vue";
+// 引入顶部筛选部分
+import FlightsFilter from "@/components/air/flightsFilter.vue";
 export default {
   data() {
     return {
+      flightsInfo: {}, // 机票信息，包括起飞机场，起飞时间，机型和航空公司
       loading: false,
       flightsData: {}, // 航班总数据
       flightList: [], // 航班列表数据，用于循环生成列表内容部分
       allIndex: 0, // 列表项所有的index
       currentPage: 1, // 当前页码
       pageSize: 10, // 每页显示的条数
-      dataList: [] // 这个数组里面存储的是每一页的数据
+      // dataList: [] // 这个数组里面存储的是每一页的数据
     };
   },
   components: {
     FlightsListHeader,
-    FlightsList
+    FlightsList,
+    FlightsFilter
   },
   mounted() {
     // 页面一加载就需要生成列表数据
@@ -67,39 +72,44 @@ export default {
       // console.log(res);
       // 如果请求发送成功
       this.flightData = res.data;
+      console.log(this.flightData);
       this.flightList = this.flightData.flights;
-      console.log(this.flightList);
-      this.setDataList();
+      // console.log(this.flightList);
+      // this.setDataList();
       this.loading = false;
+      this.flightsInfo = this.flightData.options;
+      console.log(this.flightsInfo);
     });
   },
   methods: {
     getRecIndex(index) {
-      console.log(index);
+      // console.log(index);
       // 父组件监听子组件的点击事件，获取子组件传递过来的index
       this.allIndex = index;
-      console.log(this.allIndex);
+      // console.log(this.allIndex);
     },
     // 处理页码大小的函数,每页显示条数
     handleSizeChange(val) {
       // console.log(val);
       this.pageSize = val;
       this.currentPage = 1;
-      this.setDataList();
+      // this.setDataList();
     },
     // 当前页变化时的函数
     handleCurrentChange(val) {
       // console.log(val);
       this.currentPage = val;
-      this.setDataList();
-    },
+      // this.setDataList();
+    }
+  },
+  computed: {
     // 将需要渲染的数据存储到一个数组中
-    setDataList() {
+    dataList() {
       const start = (this.currentPage - 1) * this.pageSize;
       const end = start + this.pageSize;
       // 数组 slice 方法接受两个参数, 第一个是切割的开始(包括当前index), 第二个是切割的结束(不包过当前 index),
-      this.dataList = this.flightList.slice(start, end);
-      console.log(this.dataList);
+      return this.flightList.slice(start, end);
+      // console.log(this.dataList);
     }
   }
 };

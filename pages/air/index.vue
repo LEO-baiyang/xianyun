@@ -40,7 +40,7 @@
       <el-row type="flex" class="air-sale-pic" justify="space-between">
         <el-col v-for="(value,index) in sales" :key="index" :span="6">
           <nuxt-link
-            :to="`/air/flights?departCity=${value.departCity}&departCode=${value.departCity}&destCity=${value.destCity}&destCode=${value.destCode}&departDate=${value.departDate}`"
+            :to="`/air/flights?departCity=${value.departCity}&departCode=${value.departCode}&destCity=${value.destCity}&destCode=${value.destCode}&departDate=${value.departDate}`"
           >
             <img :src="value.cover" alt />
             <el-row class="layer-bar" type="flex" justify="space-between">
@@ -71,7 +71,7 @@ export default {
       url: "/airs/sale"
     }).then(res => {
       // 如果请求发送成功，获取数据渲染页面
-      console.log(res);
+      // console.log(res);
       const { data } = res.data;
       this.sales = data;
     });
