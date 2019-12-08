@@ -43,7 +43,13 @@
       </el-col>
       <!-- 航空公司 -->
       <el-col :span="4">
-        <el-select v-model="airCompany" placeholder="航空公司" size="mini" :clearable="true">
+        <el-select
+          v-model="airCompany"
+          placeholder="航空公司"
+          size="mini"
+          :clearable="true"
+          @change="runFilters"
+        >
           <el-option
             v-for="(item,index) in flightsData.options.company"
             :key="index"
@@ -54,7 +60,13 @@
       </el-col>
       <!-- 机型 -->
       <el-col :span="4">
-        <el-select v-model="airType" placeholder="机型" size="mini" :clearable="true">
+        <el-select
+          v-model="airType"
+          placeholder="机型"
+          size="mini"
+          :clearable="true"
+          @change="runFilters"
+        >
           <el-option
             v-for="(item,index) in flightsSize"
             :key="index"
@@ -100,9 +112,17 @@ export default {
       if (this.airport) {
         newFlightsList = this.handleAirport(newFlightsList);
       }
-      // 修改事件筛选条件
+      // 修改时间筛选条件
       if (this.airTime) {
         newFlightsList = this.handleAirTime(newFlightsList);
+      }
+      // 修改航空公司筛选条件
+      if (this.airCompany) {
+        newFlightsList = this.handleAirCompany(newFlightsList);
+      }
+      // 修改机型少选条件
+      if (this.airType) {
+        newFlightsList = this.handleAirType(newFlightsList);
       }
       this.$emit("setFlightsData", newFlightsList);
     },
@@ -126,10 +146,27 @@ export default {
     },
     // 机场筛选
     handleAirport(oldFlightsList) {
-      
+      let newFlightsList = oldFlightsList.filter(element => {
+        // 筛选条件，将所有起飞机场符合条件的存到新数组中
+        return element.org_airport_name == this.airport;
+      });
+      return newFlightsList;
     },
     // 航空公司筛选
+    handleAirCompany(oldFlightsList) {
+      let newFlightsList = oldFlightsList.filter(element => {
+        // 判断原始数据中是否有满足当前条件的，有的就将其存到新数组中
+        return element.airline_name == this.airCompany;
+      });
+      return newFlightsList;
+    },
     // 机型筛选
+    handleAirType(oldFlightsList) {
+      let newFlightsList = oldFlightsList.filter(
+        element => element.plane_size == this.airType
+      );
+      return newFlightsList;
+    },
     handleFiltersCancel() {}
   }
 };
