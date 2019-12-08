@@ -4,7 +4,7 @@
       <!-- 主体  -->
       <el-col class="flightsList" :span="18">
         <!-- 过滤筛选 -->
-        <FlightsFilter :flightsInfo="flightsInfo" />
+        <FlightsFilter :flightsData="flightsInfo" @setFlightsData="setFlightsData" />
         <!-- 列表头部 -->
         <FlightsListHeader />
         <!-- 列表内容 -->
@@ -24,7 +24,7 @@
           :page-sizes="[10, 20, 30, 40]"
           :page-size="pageSize"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="flightList.length"
+          :total="flightsData.flights.length"
           v-if="dataList.length>0"
           class="page-size"
         ></el-pagination>
@@ -47,13 +47,23 @@ import FlightsFilter from "@/components/air/flightsFilter.vue";
 export default {
   data() {
     return {
-      flightsInfo: {}, // 机票信息，包括起飞机场，起飞时间，机型和航空公司
+      // 缓存数据，永远不会变化
+      flightsInfo: {
+        flights: [],
+        info: {},
+        options: {}
+      }, // 机票信息，包括起飞机场，起飞时间，机型和航空公司
       loading: false,
-      flightsData: {}, // 航班总数据
-      flightList: [], // 航班列表数据，用于循环生成列表内容部分
+      // 这个数据会根据条件变化
+      flightsData: {
+        flights: [],
+        info: {},
+        options: {}
+      }, // 航班总数据
+      // flightList: [], // 航班列表数据，用于循环生成列表内容部分
       allIndex: 0, // 列表项所有的index
       currentPage: 1, // 当前页码
-      pageSize: 10, // 每页显示的条数
+      pageSize: 10 // 每页显示的条数
       // dataList: [] // 这个数组里面存储的是每一页的数据
     };
   },
@@ -71,14 +81,15 @@ export default {
     }).then(res => {
       // console.log(res);
       // 如果请求发送成功
-      this.flightData = res.data;
-      console.log(this.flightData);
-      this.flightList = this.flightData.flights;
+      this.flightsData = res.data;
+      // console.log(this.flightsData);
+      // this.flightList = this.flightsData.flights;
       // console.log(this.flightList);
       // this.setDataList();
       this.loading = false;
-      this.flightsInfo = this.flightData.options;
-      console.log(this.flightsInfo);
+      // 将数据 除了放到 flightsData 里面 还应该放到 缓存里面,这个缓存的数据,接受过一次以后,再也不会变
+      this.flightsInfo = { ...this.flightsData };
+      // console.log(this.flightsData.flights);
     });
   },
   methods: {
@@ -100,6 +111,12 @@ export default {
       // console.log(val);
       this.currentPage = val;
       // this.setDataList();
+    },
+    setFlightsData(newFlightsList) {
+      console.log("修改机票筛选参数被触发");
+      // 接受到新的机票数据
+      this.flightsData.flights = newFlightsList;
+      console.log(this.flightsData.flights);
     }
   },
   computed: {
@@ -108,8 +125,8 @@ export default {
       const start = (this.currentPage - 1) * this.pageSize;
       const end = start + this.pageSize;
       // 数组 slice 方法接受两个参数, 第一个是切割的开始(包括当前index), 第二个是切割的结束(不包过当前 index),
-      return this.flightList.slice(start, end);
-      // console.log(this.dataList);
+      console.log(this.flightsData.flights);
+      return this.flightsData.flights.slice(start, end);
     }
   }
 };

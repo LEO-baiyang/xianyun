@@ -3,15 +3,21 @@
     <el-row type="flex" justify="space-between" class="filter-top" align="middle">
       <!-- 标题 -->
       <el-col :span="8">
-        单程：广州 - 上海
+        {{flightsData.info.departCity}} - {{flightsData.info.destCity}}
         /
-        2019-12-07
+        {{flightsData.info.departDate}}
       </el-col>
       <!-- 起飞机场 -->
       <el-col :span="4">
-        <el-select v-model="airPort" placeholder="起飞机场" size="mini">
+        <el-select
+          v-model="airPort"
+          placeholder="起飞机场"
+          size="mini"
+          @change="runFilters"
+          :clearable="true"
+        >
           <el-option
-            v-for="(item,index) in flightsInfo.airport"
+            v-for="(item,index) in flightsData.options.airport"
             :key="index"
             :label="item"
             :value="item"
@@ -20,9 +26,15 @@
       </el-col>
       <!-- 起飞时间 -->
       <el-col :span="4">
-        <el-select v-model="airTime" placeholder="起飞时间" size="mini">
+        <el-select
+          v-model="airTime"
+          placeholder="起飞时间"
+          size="mini"
+          @change="runFilters"
+          :clearable="true"
+        >
           <el-option
-            v-for="(item,index) in flightsInfo.flightTimes"
+            v-for="(item,index) in flightsData.options.flightTimes"
             :key="index"
             :label="`${item.from}:00 - ${item.to}:00`"
             :value="`${item.from},${item.to}`"
@@ -31,9 +43,9 @@
       </el-col>
       <!-- 航空公司 -->
       <el-col :span="4">
-        <el-select v-model="airCompany" placeholder="航空公司" size="mini">
+        <el-select v-model="airCompany" placeholder="航空公司" size="mini" :clearable="true">
           <el-option
-            v-for="(item,index) in flightsInfo.company"
+            v-for="(item,index) in flightsData.options.company"
             :key="index"
             :label="item"
             :value="item"
@@ -42,7 +54,7 @@
       </el-col>
       <!-- 机型 -->
       <el-col :span="4">
-        <el-select v-model="airType" placeholder="机型" size="mini">
+        <el-select v-model="airType" placeholder="机型" size="mini" :clearable="true">
           <el-option
             v-for="(item,index) in flightsSize"
             :key="index"
@@ -62,7 +74,8 @@
 
 <script>
 export default {
-  props: ["flightsInfo"],
+  // 从父组件传递过来的数据，永远都是满数据，需要在父组件中定义两个变量，这两个变量，一个里面存储的永远都是满数据，这个变量也是传递到子组件的数据，一个是根据条件来渲染页面的数据
+  props: ["flightsData"], // 这个数据是从父组件的缓存数据传递过来的
   data() {
     return {
       airPort: "", // 起飞机场
@@ -78,6 +91,45 @@ export default {
     };
   },
   methods: {
+    // 过滤
+    runFilters() {
+      // console.log(123);
+      // 先将原始数据存储到变量中
+      let newFlightsList = this.flightsData.flights;
+      // 修改起飞机场筛选条件
+      if (this.airport) {
+        newFlightsList = this.handleAirport(newFlightsList);
+      }
+      // 修改事件筛选条件
+      if (this.airTime) {
+        newFlightsList = this.handleAirTime(newFlightsList);
+      }
+      this.$emit("setFlightsData", newFlightsList);
+    },
+    // 时间筛选
+    handleAirTime(oldFlightsList) {
+      // console.log(oldFlightsList);
+      var newFlightsList = oldFlightsList.filter(element => {
+        // 先获取飞机起飞时间的小时数据
+        var depTimeHour = +element.dep_time.split(":")[0];
+        // console.log(depTimeHour);
+        // this.flightTimes 是一个字符串 "6,12"
+        // 先切割成一个数组
+        var before = +this.airTime.split(",")[0];
+        var after = +this.airTime.split(",")[1];
+        // 数据量少的时候可以写死一个小范围进行测试
+        // var before = 21;
+        // var after = 22;
+        return depTimeHour >= before && depTimeHour < after;
+      });
+      return newFlightsList;
+    },
+    // 机场筛选
+    handleAirport(oldFlightsList) {
+      
+    },
+    // 航空公司筛选
+    // 机型筛选
     handleFiltersCancel() {}
   }
 };
