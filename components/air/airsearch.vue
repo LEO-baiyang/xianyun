@@ -200,8 +200,11 @@ export default {
     },
     // 搜索提交事件
     handleSubmit() {
+      // 点击搜索的时候，跳转页面的同时要将搜索结果存储到历史记录中
+      // 通过vuex来存储
+      // 将历史记录存储到本地
+      this.$store.commit("history/addHistoryItem", this.cityForm);
       console.log(this.cityForm);
-
       // query 的参数都会作为 url location.search 参数待在最后以问号开头,& 分隔
       // params
       // 1. 如果我们的路由配置, path 里面有动态路由参数, 而且你传的 params 也是相同名称的属性,那么这个参数就会显示在url上
